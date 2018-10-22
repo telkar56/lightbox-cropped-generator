@@ -1,1 +1,1 @@
-# lightbox-cropped-generator
+# paginated-img-table

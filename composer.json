@@ -1,0 +1,11 @@
+{
+  "name": "galvorn56/testmod",
+  "description": "Adminimal styling brought to admin toolbar.",
+  "version": "1.0.0",
+  "type": "drupal-module",
+  "authors": [{
+    "name": "Ted Slesinski",
+    "homepage": "https://www.drupal.org/u/energee"
+  }],
+  "license": "GPL-2.0+"
+}
