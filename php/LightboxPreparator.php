@@ -5,7 +5,7 @@ class LightboxPreparator {
 	private $sizeFinal;
 	public static $imagesTypes = array('jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG', 'gif', 'GIF', 'svg', 'SVG'); 
 
-	function __construct ($sizeFinal, $picturesDir, $csvAssociation) {
+	function __construct ($sizeFinal, $picturesDir, $csvAssociation, $recalculateAll = true) {
 		$this->config = parse_ini_file("config_lightbox_preparator.ini", true);
 		$this->sizeFinal = $sizeFinal;
 
@@ -88,19 +88,29 @@ class LightboxPreparator {
 	function buildResizedCroppedImage ($width, $height, $imgRatio, $loadedImage) {
 		$newImage = imagecreatetruecolor($this->sizeFinal, $this->sizeFinal);
 
+		// selon le ratio on prend le carré le plus large possible de l'image d'origine
 		if ($imgRatio < 1) {
+			// si image verticale -> le côté du carré est déterminé par la largeur
+			// (puisque moins de largeur que de hauteur)
 			$size = $width;
+			// uniquement besoin de calculer à partir de quand on coupe verticalement
+			// puisqu'on prend tout horizontalement
 			$srcY = (($height/2)-($size/2));
 			$tmp = imagecreatetruecolor($size, $size);
-			imagecopyresampled($tmp, $loadedImage, 0, 0, 0, $srcY, $size, $size, $width, $size);
+			imagecopyresampled($tmp, $loadedImage, 0, 0, 0, $srcY, $size, $size, $size, $size);
 		}
 		else if ($imgRatio > 1) {
+			// si image horizontale -> le côté du carré est déterminé par la hauteur
+			// (puisque moins de hauteur que de largeur)
 			$size = $height;
+			// uniquement besoin de calculer à partir de quand on coupe horizontalement
+			// puisqu'on prend tout verticalement
 			$srcX = (($width/2)-($size/2));
 			$tmp = imagecreatetruecolor($size, $size);
-			imagecopyresampled($tmp, $loadedImage, 0, 0, $srcX, 0, $size, $size, $size, $height);
+			imagecopyresampled($tmp, $loadedImage, 0, 0, $srcX, 0, $size, $size, $size, $size);
 		}
 
+		// l'image carrée obtenue est réduite à la dimension finale
 		imagecopyresampled($newImage, $tmp, 0, 0, 0, 0, $this->sizeFinal, $this->sizeFinal, $size, $size);
 
 		return $newImage;
