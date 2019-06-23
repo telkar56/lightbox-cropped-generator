@@ -28,7 +28,7 @@ class LightboxPreparator {
 						while (($file = readdir($secondHandle)) !== false) {
 							if ($file != '.' && $file != '..') {
 								$info = new SplFileInfo($file);
-								$this->resizeAndDuplicate($file, $inputDir, $generalDir, $outputDir, $csvHandle);
+								$this->resizeAndDuplicate($file, $inputDir, $outputDir, $csvHandle);
 							}
 						}
 					}
@@ -58,7 +58,7 @@ class LightboxPreparator {
 		}
 	}
 		
-	function resizeAndDuplicate ($image, $inputDir, $generalDir, $outputDir, $csvHandle) {
+	function resizeAndDuplicate ($image, $inputDir, $outputDir, $csvHandle) {
 
 		$info = new SplFileInfo($image);
 		$ext = $info->getExtension();
@@ -77,8 +77,8 @@ class LightboxPreparator {
 			$loadedImage = $imgCreateAlias($inputDir.'/'.$image);
 			$newImage = $this->buildResizedCroppedImage($width, $height, $imgRatio, $loadedImage);
 
-			$imageSaveAlias($newImage, $outputDir.'/'.$this->config['OutputFolderCode-thumb'].'/'.explode('.', $info->getFilename())[0].'-square'.'.'.$ext, 92);
-			$imageSaveAlias($loadedImage, $outputDir.'/'.$this->config['OutputFolderCode-full'].'/'.explode('.', $info->getFilename())[0].'-fullsize'.'.'.$ext, 94);
+			$imageSaveAlias($newImage, $outputDir.'/'.$this->config['OutputFolderCode-thumb'].'/'.explode('.', $info->getFilename())[0].'-square'.'.'.$ext, 80);
+			$imageSaveAlias($loadedImage, $outputDir.'/'.$this->config['OutputFolderCode-full'].'/'.explode('.', $info->getFilename())[0].'-fullsize'.'.'.$ext, 80);
 
 			$this->fillAssociatedImagesCsv($csvHandle, $info);
 		}
@@ -131,7 +131,7 @@ class LightboxPreparator {
 
 }
 
-$test = new LightboxPreparator(750, '../photos', true);
+$test = new LightboxPreparator(310, '../photos', true);
 // $test->resizeAndDuplicate(true);
 
 ?>

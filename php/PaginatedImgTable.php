@@ -53,6 +53,7 @@ class PaginatedImgTable {
 		else {
 			echo $this->buildClassicImgsCanvas($selectedImgs);
 		}
+		echo $this->getNavigation($pageNumber, $imgQuantity);
 		
 	}
 
@@ -79,10 +80,10 @@ class PaginatedImgTable {
 	}
 
 	function buildLightboxImgsCanvas ($imgs) {
-		$html = '<div class="img-canvas-lightbox">';
+		$html = '<div class="img-canvas-lightbox row">';
 		foreach ($imgs as $img) {
 			if (!empty($img[$this->config['csvFullsizeColumn']])) {
-				$html .= '<div class="fancybox-wrapper"><a class="fancybox" data-fancybox="images" href="'.$this->picturesInputDirectory.'/'.$this->config['directories']['fullsizeIntputFolder'].'/'.$img[$this->config['csvFullsizeColumn']].'"><img src="'.$this->picturesInputDirectory.'/'.$this->config['directories']['squaresizeIntputFolder'].'/'.$img[$this->config['csvSquaresizeColumn']].'" alt="" /></a></div>';
+				$html .= '<div class="fancybox-wrapper col-6 col-sm-4"><a class="fancybox" data-fancybox="images" href="'.$this->picturesInputDirectory.'/'.$this->config['directories']['fullsizeIntputFolder'].'/'.$img[$this->config['csvFullsizeColumn']].'"><img src="'.$this->picturesInputDirectory.'/'.$this->config['directories']['squaresizeIntputFolder'].'/'.$img[$this->config['csvSquaresizeColumn']].'" alt="" /></a></div>';
 			}
 			else {
 				$html .= '<div><img src="'.$this->picturesInputDirectory.'/'.$this->config['directories']['squaresizeIntputFolder'].'/'.$img[$this->config['csvSquaresizeColumn']].'" alt="" /></div>';
